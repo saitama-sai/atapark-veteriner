@@ -1,0 +1,682 @@
+<html lang="tr"><head></head><body class="font-sans text-vet-text bg-white antialiased">```html
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Atapark Veteriner Kliniği</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            vet: {
+              yellow: '#fcb913',
+              purple: '#5e0b5c',
+              text: '#333333',
+              gray: '#777777'
+            }
+          },
+          fontFamily: {
+            sans: ['Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-styles">
+    /* Custom styles for specific design elements not easily achieved with simple Tailwind utilities */
+    .hero-curve {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .hero-curve svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 60px;
+    }
+    .hero-curve .shape-fill {
+      fill: #ffffff;
+    }
+    .vertical-dotted-line {
+      position: relative;
+    }
+    .vertical-dotted-line::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      border-left: 2px dotted #fcb913;
+      transform: translateX(-50%);
+    }
+
+    /* Slider Styles */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: background-color 0.3s;
+    }
+    .slider-arrow:hover {
+      background-color: rgba(94, 11, 92, 0.8); /* vet-purple */
+    }
+    .slider-arrow.prev {
+      left: 20px;
+    }
+    .slider-arrow.next {
+      right: 20px;
+    }
+
+    /* Fade transition classes */
+    .fade-enter {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .fade-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Scroll Animation - 1 item at a time (130px) */
+    @keyframes wheelScrollVertical {
+      0%, 12% { transform: translateY(0); }
+      16.66%, 28.66% { transform: translateY(-130px); }
+      33.33%, 45.33% { transform: translateY(-260px); }
+      50%, 62% { transform: translateY(-390px); }
+      66.66%, 78.66% { transform: translateY(-520px); }
+      83.33%, 95.33% { transform: translateY(-650px); }
+      100% { transform: translateY(-780px); }
+    }
+
+    /* Pulley Wheel Rotation Animation */
+    @keyframes pulleyRotate {
+      0%, 12% { transform: rotate(0deg); }
+      16.66%, 28.66% { transform: rotate(180deg); }
+      33.33%, 45.33% { transform: rotate(360deg); }
+      50%, 62% { transform: rotate(540deg); }
+      66.66%, 78.66% { transform: rotate(720deg); }
+      83.33%, 95.33% { transform: rotate(900deg); }
+      100% { transform: rotate(1080deg); }
+    }
+
+    .services-track {
+      display: flex;
+      flex-direction: column;
+      animation: wheelScrollVertical 20s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+    }
+
+    .pulley-wheel {
+      animation: pulleyRotate 20s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+    }
+
+    .service-item-wrapper {
+      height: 130px;
+      width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+<style>
+  .animal-icon-container {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .animal-icon-container:hover {
+    transform: translateY(-10px);
+  }
+  .animal-display-fade {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+  .hidden-animal {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .active-animal {
+    opacity: 1;
+    transform: scale(1);
+    position: relative;
+    width: 100%;
+  }
+  .product-link {
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 2rem;
+    color: #FFFFFF !important;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+    display: block;
+  }
+  .product-link::before {
+    content: '🐾';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: white !important;
+    /* Emojiyi beyaza zorlamak için filtre */
+    filter: grayscale(100%) brightness(200%);
+  }
+  .product-link:hover {
+    color: #fcb913 !important;
+    transform: translateX(5px);
+  }
+  .product-link:hover::before {
+    filter: none;
+    color: #fcb913 !important;
+  }
+
+  /* Testimonials Curve */
+  .testimonials-curve-top {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 10;
+  }
+  .testimonials-curve-top svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 80px;
+  }
+  .testimonials-curve-top .shape-fill {
+      fill: #f9fafb; /* bg-gray-50 */
+  }
+</style>
+<!-- BEGIN: MainHeader -->
+<header class="w-full shadow-sm z-50 relative">
+<!-- Top Contact Bar -->
+<div class="bg-vet-yellow text-sm py-1.5 px-4">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+<!-- Left: Phone and Email -->
+<div class="flex items-center space-x-6 text-black font-medium">
+<a class="flex items-center space-x-2 hover:text-vet-purple transition-colors" href="tel:+902582640262" style="">
+<span class="bg-vet-purple text-white p-1 rounded-full flex items-center justify-center w-6 h-6">
+<svg class="h-3 w-3" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span class="" style="">0 (258) 264 02 62</span>
+</a>
+<a class="flex items-center space-x-2 hover:text-vet-purple transition-colors" href="mailto:iletisim@ataparkveteriner.com" style="">
+<span class="bg-vet-purple text-white p-1 rounded-full flex items-center justify-center w-6 h-6">
+<svg class="h-3 w-3" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span class="" style="">iletisim@ataparkveteriner.com</span>
+</a>
+</div>
+<!-- Right: Social Media -->
+<div class="flex items-center">
+<a aria-label="Facebook" class="bg-vet-purple text-white p-1 rounded-full flex items-center justify-center w-6 h-6 hover:bg-black transition-colors" href="#" style="">
+<svg fill="currentColor" height="12" viewbox="0 0 16 16" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Main Navigation Bar -->
+<div class="bg-white">
+<div class="max-w-7xl mx-auto px-4 h-24 flex items-center justify-center relative">
+<nav class="hidden md:flex items-center w-full justify-center space-x-8 text-sm font-bold text-gray-800">
+<a class="hover:text-vet-purple transition-colors cursor-pointer" onclick="showHome()" style="">ANASAYFA</a>
+<a class="hover:text-vet-purple transition-colors cursor-pointer" onclick="showAbout()" style="">KURUMSAL</a>
+<a class="hover:text-vet-purple transition-colors" href="#" style="">KLİNİK</a>
+<!-- Central Logo / Brand Name -->
+<div class="mx-8 relative -top-2 flex flex-col items-center justify-center">
+<a class="flex flex-col items-center cursor-pointer" onclick="showHome()" style="">
+<span class="text-3xl font-extrabold text-vet-purple tracking-tight leading-none" style="text-shadow: rgb(252, 185, 19) 2px 2px 0px, rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">Atapark</span>
+<span class="text-xs font-bold text-gray-600 uppercase tracking-widest mt-1" style="">Veteriner Kliniği</span>
+</a>
+</div>
+<a class="hover:text-vet-purple transition-colors" href="#" style="">ÜRÜNLER</a>
+<a class="hover:text-vet-purple transition-colors" href="#" style="">HİZMETLERİMİZ</a>
+<a class="hover:text-vet-purple transition-colors" href="#" style="">İLETİŞİM</a>
+</nav>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: HeroSection -->
+<section class="relative w-full h-[500px] bg-gray-200 block" id="heroSection" style="display: block;">
+<!-- Hero Background Slider -->
+<div class="slider-container">
+<div class="slides" id="heroSlides">
+<div class="slide">
+<img alt="Veteriner Kliniği" class="" src="assets/images/media__1776798044530.png" style=""/>
+</div>
+<div class="slide">
+<img alt="Cute Cat" class="" src="assets/images/media__1776797990395.png" style=""/>
+</div>
+<div class="slide">
+<img alt="Cute Dog" class="" src="assets/images/media__1776798000529.png" style=""/>
+</div>
+</div>
+<button class="slider-arrow prev" onclick="moveSlide(-1)" style="">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<button class="slider-arrow next" onclick="moveSlide(1)" style="">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Curved Bottom Divider -->
+<div class="hero-curve z-10">
+<svg data-name="Layer 1" preserveaspectratio="none" viewbox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+<path class="shape-fill" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+<path class="shape-fill" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"></path>
+<path class="shape-fill" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+</svg>
+</div>
+<!-- Floating Feedback Button -->
+<div class="fixed right-0 top-1/2 transform -translate-y-1/2 z-40">
+<button class="bg-vet-purple text-white px-2 py-4 rounded-l-md shadow-lg flex items-center justify-center writing-vertical-rl transform rotate-180 text-xs font-semibold hover:bg-vet-yellow hover:text-black transition-colors" style="writing-mode: vertical-rl;">
+<span class="mb-2"><svg class="h-4 w-4 transform -rotate-90" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></span>
+        Geribildirim
+      </button>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: MainContent (Home) -->
+<main class="w-full bg-white pt-16 block" id="homeContent" style="display: block;">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+<!-- Left Column: About Us -->
+<div class="pr-0 md:pr-8 flex flex-col justify-between">
+<div>
+<h2 class="text-2xl font-bold text-vet-purple mb-6 uppercase" style="">"ATAPARK VETERİNER KLİNİĞİ"</h2>
+<p class="text-vet-gray text-sm leading-relaxed mb-6" style="">
+              "Yenilikleri takip edip, Veteriner Hekimlik ve medikal donanımı birleştirip, hayvan refahını en üst seviyede tutmak." ilkesiyle 2015 yılında yola çıktık. ATAPARK VETERİNER KLİNİĞİ olarak geçen bu süreçte sayısız evcil hayvan dostumuza hizmet ettik, onlar için en iyisi olduğunu kabul ettiğimiz ...
+            </p>
+</div>
+<div class="relative mt-8">
+<!-- Decorative image -->
+<img alt="Clinic Area" class="w-full h-auto rounded shadow-sm opacity-80 object-cover aspect-video" src="assets/images/img_7.jpg" style=""/>
+<!-- Circular Read More Button overlapping the image -->
+<a class="absolute -left-6 -bottom-6 bg-vet-purple text-white w-20 h-20 rounded-full flex items-center justify-center font-bold text-[10px] uppercase shadow-lg border-4 border-white hover:bg-vet-yellow hover:text-black transition-colors z-10 cursor-pointer" onclick="showAbout()" style="">
+              Devamı...
+            </a>
+</div>
+</div>
+<!-- Center Divider (Desktop only visually) -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 w-[2px] border-l-2 border-dotted border-vet-yellow z-0">
+<!-- Small decorative square on the line -->
+<div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-3 h-3 border-2 border-vet-yellow bg-white z-10"></div>
+</div>
+<!-- Right Column: Services List -->
+<div class="pl-0 md:pl-16 relative z-10 h-[390px] overflow-hidden group">
+<!-- Mechanical Pulley Wheel -->
+<div class="absolute top-[8px] left-10 md:left-[6.5rem] transform -translate-x-1/2 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+<div class="pulley-wheel text-vet-purple w-full h-full flex items-center justify-center">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Background Purple Line -->
+<div class="absolute top-[28px] bottom-[40px] left-10 md:left-[6.5rem] w-1 bg-vet-purple transform -translate-x-1/2 z-0"></div>
+<div class="relative w-full h-full">
+<div class="services-track">
+<!-- Service Item 1 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Cerrahi" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_1.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">GENEL VE ÖZEL CERRAHİ</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Küçük dostlarımızın başlarına zaman zaman gelen yapısal prob...</p>
+</div>
+</div>
+</div>
+<!-- Service Item 2 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Pet Kuaför" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_11.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">PET KUAFÖR</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Seevimli dostlarımızın tıraş, banyo, tırnak kesimi, göz-kulak temiz...</p>
+</div>
+</div>
+</div>
+<!-- Service Item 3 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Mama ve Malzemeler" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_4.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">MAMA VE PET MALZEMELER</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Kedi ve köpeklerimizin doğru beslenmeleri, yaşlarına, boy/kilo oranlar...</p>
+</div>
+</div>
+</div>
+<!-- Service Item 4 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<div class="h-20 w-20 rounded-full border-4 border-white shadow-md bg-vet-purple flex items-center justify-center text-white">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">LABORATUVAR HİZMETLERİ</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Hızlı ve güvenilir tanı için tam donanımlı laboratuvarımız hizmetinizde...</p>
+</div>
+</div>
+</div>
+<!-- Service Item 5 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<div class="h-20 w-20 rounded-full border-4 border-white shadow-md bg-vet-yellow flex items-center justify-center text-white">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">AŞI TAKVİMİ</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Evcil hayvanlarınızın sağlıklı bir ömür sürmesi için düzenli aşı takibi...</p>
+</div>
+</div>
+</div>
+<!-- Service Item 6 -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<div class="h-20 w-20 rounded-full border-4 border-white shadow-md bg-vet-purple flex items-center justify-center text-white">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">DAHİLİYE</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">İç hastalıkların teşhis ve tedavisinde uzman kadromuzla yanınızdayız...</p>
+</div>
+</div>
+</div>
+<!-- Duplicate items 1-3 for loop -->
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Cerrahi" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_1.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">GENEL VE ÖZEL CERRAHİ</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Küçük dostlarımızın başlarına zaman zaman gelen yapısal prob...</p>
+</div>
+</div>
+</div>
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Pet Kuaför" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_11.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">PET KUAFÖR</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Seevimli dostlarımızın tıraş, banyo, tırnak kesimi, göz-kulak temiz...</p>
+</div>
+</div>
+</div>
+<div class="service-item-wrapper">
+<div class="flex items-start space-x-6 bg-white py-2" style="">
+<div class="flex-shrink-0 z-10 relative">
+<img alt="Mama ve Malzemeler" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-md bg-white" src="assets/images/img_4.jpg" style=""/>
+</div>
+<div class="pt-2 bg-white flex-1">
+<h3 class="text-base font-bold text-gray-900 uppercase" style="">MAMA VE PET MALZEMELER</h3>
+<p class="mt-1 text-sm text-vet-gray leading-tight" style="">Kedi ve köpeklerimizin doğru beslenmeleri, yaşlarına, boy/kilo oranlar...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="w-full bg-vet-purple py-12 px-4 flex flex-col items-center justify-center text-center">
+<h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-wider uppercase" style="">ÜRÜNLER</h2>
+<p class="text-white text-sm md:text-base max-w-4xl opacity-90" style="">
+    Hayvanların uzun, mutlu ve sağlıklı yaşayabilmeleri için katma değere sahip kaliteli malzemeler.</p>
+<div class="w-full max-w-xs md:max-w-md h-px bg-white/30 mt-8 relative">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/4 h-px bg-white"></div>
+</div>
+</section>
+<div class="w-full relative">
+<div class="w-full relative bg-vet-purple"><img alt="Sevimli Dostlarımız Manzara" class="w-full h-auto object-cover opacity-90 mix-blend-multiply" src="assets/images/media__1776797970592.png" style="max-height: 400px;"/></div>
+</div>
+<section class="w-full bg-gray-50 py-16 pb-24 relative">
+<div class="max-w-6xl mx-auto px-4 text-center">
+<!-- Main Display Area -->
+<div class="relative flex items-center justify-center -mt-48 md:-mt-80 mb-12 z-10">
+<div class="animal-display-fade active-animal w-full" id="dog-display">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<!-- Left Products -->
+<div class="text-left space-y-4 md:pl-12">
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Köpek Mamaları
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Köpek Tasmaları
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Köpek Gezdirmeler
+        </a>
+</div>
+<!-- Center Image -->
+<div class="flex justify-center pointer-events-none">
+<img alt="Dog" class="max-h-[350px] md:max-h-[500px] w-auto drop-shadow-2xl" src="assets/images/media__1776797952039.png" style=""/>
+</div>
+<!-- Right Products -->
+<div class="text-left space-y-4 md:pl-12">
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Şampuanlar
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Taraklar
+        </a>
+</div>
+</div>
+</div>
+<div class="animal-display-fade hidden-animal w-full" id="cat-display">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<!-- Left Products -->
+<div class="text-left space-y-4 md:pl-12">
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Kedi Mamaları
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Kedi Kumları
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Kedi Tasmaları
+        </a>
+</div>
+<!-- Center Image -->
+<div class="flex justify-center pointer-events-none">
+<img alt="Cat" class="max-h-[350px] md:max-h-[500px] w-auto drop-shadow-2xl" src="assets/images/media__1776797942969.png" style=""/>
+</div>
+<!-- Right Products -->
+<div class="text-left space-y-4 md:pl-12">
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Kedi Tuvaletleri
+        </a>
+<a class="product-link block hover:text-vet-yellow font-bold text-lg md:text-xl" href="#">
+          Tırmalama Tahtaları
+        </a>
+</div>
+</div>
+</div>
+</div>
+<h2 class="text-2xl font-bold mb-8 uppercase relative z-20 mt-8 mt-16 pt-12" style="color: #5e0b5c;">Dostunuzu Seçin</h2>
+<!-- Interactive Icons -->
+<div class="flex justify-center space-x-12 relative z-20">
+<div class="animal-icon-container" onclick="switchAnimal('dog')">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+<img alt="Dog Icon" class="w-full h-full object-cover" src="assets/images/media__1776797952039.png" style=""/>
+</div></div>
+<div class="animal-icon-container" onclick="switchAnimal('cat')">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+<img alt="Cat Icon" class="w-full h-full object-cover" src="assets/images/media__1776797942969.png" style=""/>
+</div></div></div></div></section>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: AboutContent -->
+<section class="w-full bg-white pb-16 hidden" id="aboutContent">
+<!-- Banner -->
+<div class="relative w-full h-[350px] flex flex-col items-center justify-center text-white overflow-hidden bg-white" style="clip-path: ellipse(150% 100% at 50% 0%); background-color: #5e0b5c;">
+<img alt="About Banner" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-multiply" src="assets/images/media__1776798044530.png" style=""/>
+<div class="relative z-10 text-center mt-8 drop-shadow-lg text-vet-purple">
+<h1 class="text-4xl md:text-5xl font-bold mb-3 tracking-wide drop-shadow-md text-white" style="">HAKKIMIZDA</h1>
+<p class="text-sm font-semibold tracking-widest text-white" style="">ANASAYFA / HAKKIMIZDA</p>
+</div>
+<!-- Curved Bottom Divider matching Hero -->
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<!-- Left: Teddy Bear Image -->
+<div class="rounded-lg overflow-hidden shadow-sm">
+<img alt="Hakkımızda - Teddy Bear" class="w-full h-auto object-cover" src="assets/images/img_7.jpg" style=""/>
+</div>
+<!-- Right: Main Content Text -->
+<div class="text-gray-600 text-sm md:text-base leading-relaxed text-justify space-y-4">
+<p class="" style="">
+          "Yenilikleri takip edip, Veteriner Hekimlik ve medikal donanımı birleştirip, hayvan refahını en üst seviyede tutmak. " ilkesiyle 2015 yılında yola çıktık. ATAPARK VETERİNER KLİNİĞİ olarak geçen bu süreçte sayısız evcil hayvan dostumuza hizmet ettik, onlar için en iyisi olduğunu kabul ettiğimiz ve sonuçlarını mutlulukla topladığımız kendi tedavi süreçlerimizi oluşturduk.
+        </p>
+<p class="" style="">
+          Hastalarımıza, ailelerine ve danışanlarımıza hep empatiyle yaklaştık, onları mutlu uğurlamak için görüşlerini önemsedik. Onlar bizden biri oldular, biz onlardan biri..
+        </p>
+<p class="" style="">
+          Şimdilerde takdir görülen bir klinik olmamızın en önemli sebebi başlarken edinmiş olduğumuz ilkemizdi. Atapark Veteriner Kliniği olarak sizlere en iyi hizmeti vermek için hep gelişiyor ve yenileniyor olacağız.
+        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: AboutContent -->
+<!-- BEGIN: Testimonials -->
+<section class="w-full bg-white py-16 relative">
+<div class="max-w-6xl mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-vet-purple uppercase" style="">Görüşleriniz Bizim İçin Değerli</h2>
+</div>
+</div></section>
+<script>
+    let slideIndex = 0;
+    const slidesContainer = document.getElementById('heroSlides');
+    const slidesCount = document.querySelectorAll('.slide').length;
+    let slideInterval;
+    
+    function moveSlide(n) {
+        slideIndex += n;
+        if (slideIndex >= slidesCount) {
+            slideIndex = 0;
+        } else if (slideIndex < 0) {
+            slideIndex = slidesCount - 1;
+        }
+        slidesContainer.style.transform = `translateX(-${slideIndex * 100}%)`;
+        
+        // Reset the timer if user manually clicks to prevent immediate slide skips
+        if (n !== 1 || !event || !event.isTrusted) {
+           // We only care to clear interval if we call moveSlide from a click event
+           // Actually, let's just clear and reset it on any interaction or tick.
+           clearInterval(slideInterval);
+           slideInterval = setInterval(() => {
+               moveSlide(1);
+           }, 5000);
+        }
+    }
+    
+    // Start auto slider on page load
+    slideInterval = setInterval(() => {
+        moveSlide(1);
+    }, 5000);
+
+    const homeContent = document.getElementById('homeContent');
+    const heroSection = document.getElementById('heroSection');
+    const aboutContent = document.getElementById('aboutContent');
+
+    function showAbout() {
+        homeContent.style.display = 'none';
+        heroSection.style.display = 'none';
+        
+        aboutContent.classList.remove('hidden');
+        aboutContent.classList.add('fade-enter');
+        void aboutContent.offsetWidth; // Trigger reflow
+        aboutContent.classList.add('fade-enter-active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showHome() {
+        aboutContent.classList.add('hidden');
+        aboutContent.classList.remove('fade-enter', 'fade-enter-active');
+        
+        homeContent.style.display = 'block';
+        heroSection.style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchAnimal(animal) {
+        const dogDisplay = document.getElementById('dog-display');
+        const catDisplay = document.getElementById('cat-display');
+        
+        if(animal === 'dog') {
+            dogDisplay.className = 'animal-display-fade active-animal w-full';
+            catDisplay.className = 'animal-display-fade hidden-animal w-full';
+        } else {
+            catDisplay.className = 'animal-display-fade active-animal w-full';
+            dogDisplay.className = 'animal-display-fade hidden-animal w-full';
+        }
+    }
+</script>
+
+</body></html>
