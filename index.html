@@ -585,92 +585,105 @@
     <!-- Tinted Background Image -->
     <img src="assets/images/media__1776797970592.png" alt="Testimonial Background" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity" />
     
-    <!-- Content Slider with Native Peeking Scroll -->
-    <div class="relative z-10 w-full overflow-hidden pb-4">
+<!-- Content Slider -->
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6">
         
-        <div id="testimonialSlider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pl-[max(1rem,calc((100vw-72rem)/2))] pr-8 py-4 transition-transform duration-300 pointer-events-auto" style="scroll-behavior: smooth;">
-            
-            <!-- Comment 1 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-3 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+        <!-- Strict clipping container with NO horizontal padding -> zero bleeding -->
+        <div class="overflow-hidden w-full m-0 p-0">
+            <div id="testimonialSlider" class="flex transition-transform duration-500 ease-in-out w-full" style="width: 300%;">
+                
+                <!-- Slide 1 -->
+                <div class="w-1/3 flex-shrink-0 px-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16">
+                        <!-- Comment 1 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-3 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">MURAT ÇEŞME / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Hayvanlarımın bakımlarını yaptırıyorum çok memnunum.</p>
+                            </div>
+                        </div>
+                        <!-- Comment 2 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-3 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">AHMET ALTINTAŞ / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Köpeğimin aşılarını yaptırıyorum çok memnunum. İlgili ve güler yüzlü bir ekip.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">MURAT ÇEŞME / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Hayvanlarımın bakımlarını yaptırıyorum çok memnunum.</p>
-                </div>
-            </div>
 
-            <!-- Comment 2 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-3 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                <!-- Slide 2 -->
+                <div class="w-1/3 flex-shrink-0 px-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16">
+                        <!-- Comment 3 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-2 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">AYŞE YILMAZ / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Kedimin kısırlaştırma operasyonu gayet başarılı geçti. Kesinlikle herkese tavsiye ederim.</p>
+                            </div>
+                        </div>
+                        <!-- Comment 4 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-2 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">MEHMET KAYA / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Gecenin bir yarısı acil durum için ulaştık, anında yardımcı oldular.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">AHMET ALTINTAŞ / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Köpeğimin aşılarını yaptırıyorum çok memnunum. İlgili ve güler yüzlü bir ekip.</p>
-                </div>
-            </div>
 
-            <!-- Comment 3 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-2 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                <!-- Slide 3 -->
+                <div class="w-1/3 flex-shrink-0 px-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16">
+                        <!-- Comment 5 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-1 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">ELİF DEMİR / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Kuşumun tedavisinde gösterdikleri nezaket ve profesyonellik takdire şayan.</p>
+                            </div>
+                        </div>
+                        <!-- Comment 6 -->
+                        <div class="flex items-start space-x-5">
+                            <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-1 hover:rotate-0 transition-transform cursor-pointer">
+                                <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
+                            </div>
+                            <div class="pt-1">
+                                <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">CANER UZUN / DENİZLİ</h3>
+                                <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
+                                <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Güvenilir, temiz ve uzman ekip. Dostlarımız emin ellerde.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">AYŞE YILMAZ / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Kedimin kısırlaştırma operasyonu gayet başarılı geçti. Kesinlikle herkese tavsiye ederim.</p>
-                </div>
-            </div>
 
-            <!-- Comment 4 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-2 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
-                </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">MEHMET KAYA / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Gecenin bir yarısı acil durum için ulaştık, anında yardımcı oldular.</p>
-                </div>
             </div>
-
-            <!-- Comment 5 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform rotate-1 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
-                </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">ELİF DEMİR / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Kuşumun tedavisinde gösterdikleri nezaket ve profesyonellik takdire şayan.</p>
-                </div>
-            </div>
-
-            <!-- Comment 6 -->
-            <div class="snap-start flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] max-w-xl flex items-start space-x-5 opacity-90 transition-opacity hover:opacity-100">
-                <div class="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center border-l-4 border-vet-yellow transform -rotate-1 hover:rotate-0 transition-transform cursor-pointer">
-                    <span class="text-vet-purple font-extrabold text-[#5e0b5c] text-xs md:text-sm text-center leading-tight">Atapark<br><span class="text-[9px] md:text-[10px] text-gray-500 font-semibold">Veteriner</span></span>
-                </div>
-                <div class="pt-1">
-                    <h3 class="text-vet-yellow font-bold uppercase text-sm md:text-base tracking-wide">CANER UZUN / DENİZLİ</h3>
-                    <div class="h-0.5 w-12 bg-vet-yellow my-2"></div>
-                    <p class="text-white text-sm md:text-base font-light italic leading-relaxed drop-shadow-md drop-shadow">Güvenilir, temiz ve uzman ekip. Dostlarımız emin ellerde.</p>
-                </div>
-            </div>
-
-        </div> <!-- End Native Slider -->
-    </div> <!-- End Overlow Wrapper -->
+        </div> <!-- End Strict Overflow Container -->
         
-        <div class="flex justify-center mt-6 space-x-3 transition-opacity">
+        <!-- Pagination Dots -->
+        <div class="flex justify-center mt-12 space-x-3 transition-opacity">
             <span class="test-dot w-3 h-3 rounded-full bg-vet-yellow cursor-pointer shadow-[0_0_8px_rgba(252,185,19,0.8)]" onclick="moveTestSlide(0)"></span>
             <span class="test-dot w-3 h-3 rounded-full bg-gray-500 opacity-50 cursor-pointer hover:opacity-100 hover:bg-vet-yellow transition-all" onclick="moveTestSlide(1)"></span>
             <span class="test-dot w-3 h-3 rounded-full bg-gray-500 opacity-50 cursor-pointer hover:opacity-100 hover:bg-vet-yellow transition-all" onclick="moveTestSlide(2)"></span>
-            <span class="test-dot w-3 h-3 rounded-full bg-gray-500 opacity-50 cursor-pointer hover:opacity-100 hover:bg-vet-yellow transition-all" onclick="moveTestSlide(3)"></span>
-            <span class="test-dot w-3 h-3 rounded-full bg-gray-500 opacity-50 cursor-pointer hover:opacity-100 hover:bg-vet-yellow transition-all" onclick="moveTestSlide(4)"></span>
         </div>
         
         <!-- Button -->
@@ -752,23 +765,18 @@
         moveSlide(1);
     }, 5000);
 
-    // Testimonial slider logic mapped to native scroll
+    // Testimonial paginated slider logic (Strict grouped slides without bleeding)
+    let testSlideIndex = 0;
     const testSlider = document.getElementById('testimonialSlider');
     const testDots = document.querySelectorAll('.test-dot');
-    let testSlideIndex = 0;
     
-    // Update dots when scrolling manually
-    testSlider.addEventListener('scroll', () => {
-        let scrollRatio = testSlider.scrollLeft / (testSlider.scrollWidth - testSlider.clientWidth);
-        // Estimate the closest index 0 to 4
-        let closestIndex = Math.round(scrollRatio * 4);
-        if(closestIndex < 0) closestIndex = 0;
-        if(closestIndex > 4) closestIndex = 4;
-        testSlideIndex = closestIndex;
-        updateDotsUI();
-    });
-
-    function updateDotsUI() {
+    function moveTestSlide(n) {
+        testSlideIndex = n;
+        
+        // Move sliding container by exact thirds
+        testSlider.style.transform = `translateX(-${(testSlideIndex * 100) / 3}%)`;
+        
+        // Update dots UI
         testDots.forEach((dot, index) => {
             if (index === testSlideIndex) {
                 dot.className = "test-dot w-3 h-3 rounded-full bg-vet-yellow cursor-pointer shadow-[0_0_8px_rgba(252,185,19,0.8)]";
@@ -778,20 +786,12 @@
         });
     }
 
-    function moveTestSlide(n) {
-        testSlideIndex = n;
-        updateDotsUI();
-        // Scroll proportionally
-        let scrollTarget = (testSlider.scrollWidth - testSlider.clientWidth) * (n / 4);
-        testSlider.scrollTo({left: scrollTarget, behavior: 'smooth'});
-    }
-    
     // Auto-rotate testimonials
     setInterval(() => {
         let nextIndex = testSlideIndex + 1;
-        if (nextIndex > 4) nextIndex = 0;
+        if (nextIndex > 2) nextIndex = 0;
         moveTestSlide(nextIndex);
-    }, 4500);
+    }, 6000);
 
     const homeContent = document.getElementById('homeContent');
     const heroSection = document.getElementById('heroSection');
